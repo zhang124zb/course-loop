@@ -1,0 +1,10 @@
+{
+  "name": "course-loop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CourseLoop：教、学、赛、评一体化交互原型，使用示例数据",
+  "scripts": {
+    "start": "node serve.mjs",
+    "check": "node --check dist/app.js"
+  }
+}
