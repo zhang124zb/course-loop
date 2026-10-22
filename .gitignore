@@ -3,3 +3,10 @@ node_modules/
 .preview-*/
 artifacts/
 *.log
+.venv/
+.runtime/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example

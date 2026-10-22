@@ -1,0 +1,8 @@
+{% extends 'teaching/base.html' %}
+{% block title %}登录{% endblock %}
+{% block shell %}
+<main id="main" class="login-layout">
+  <section class="login-story"><a class="brand light" href="{% url 'login' %}"><span class="brand-mark" aria-hidden="true">&lt;/&gt;</span><span><strong>CourseLoop</strong><small>让教学与练习形成闭环</small></span></a><div class="login-copy"><p class="eyebrow">TEACH · PRACTICE · GROW</p><h1>从课堂出发，<br>在每次实践中进阶。</h1><p>把分层资源、课堂任务和学习证据连接起来，让反馈回到教学。</p><div class="story-steps"><span>教<small>分层教学</small></span><i aria-hidden="true">→</i><span>学<small>自主实训</small></span><i aria-hidden="true">→</i><span>评<small>精准反馈</small></span></div></div><p class="login-story-foot">本机教学演示 · Python 程序设计 · 模拟学生数据</p></section>
+  <section class="login-side"><div class="login-box"><span class="badge">教学空间</span><h2>欢迎回来</h2><p class="muted">使用管理员分配的账号登录。</p>{% if messages %}{% for message in messages %}<div class="message {{ message.tags }}">{{ message }}</div>{% endfor %}{% endif %}<form method="post" class="stack-form" data-submit-lock>{% csrf_token %}{% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}{{ form.as_p }}<button type="submit" class="button primary full-width" data-loading-label="正在登录…">登录教学空间 <span aria-hidden="true">→</span></button></form><div class="login-help"><strong>首次演示</strong><p>账号由本机初始化生成。请查看启动说明中的本机账号文件；切换角色时先退出，再使用对应账号登录。</p></div><p class="login-note">本页面使用真实登录与权限控制。请勿输入真实学生信息。</p></div></section>
+</main>
+{% endblock %}

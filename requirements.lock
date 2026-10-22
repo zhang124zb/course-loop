@@ -1,0 +1,8 @@
+asgiref==3.12.1
+cffi==2.1.1
+cryptography==50.0.2
+Django==5.2.18
+pycparser==3.11
+sqlparse==0.6.0
+tzdata==2026.5
+waitress==3.0.2

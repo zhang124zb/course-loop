@@ -1,0 +1,6 @@
+{% extends 'teaching/base.html' %}
+{% block title %}操作记录{% endblock %}
+{% block breadcrumb %}操作记录{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">COURSELOOP / ACTIVITY LOG</p><h1>操作记录</h1><p class="subtitle">保留账号、资源、提交与教学建议的重要操作，便于核对过程。</p></div><span class="badge">管理员可见</span></div><section class="panel"><div class="panel-header"><h2>近期记录</h2><span class="small muted">不记录密码和模型密钥</span></div><div class="table-scroll"><table><thead><tr><th>时间</th><th>操作人</th><th>事件</th><th>对象</th><th>说明</th></tr></thead><tbody>{% for event in events %}<tr><td class="small">{{ event.created_at|date:'m-d H:i:s' }}</td><td>{% if event.actor %}{{ event.actor.profile.display_name|default:event.actor.username }}{% else %}系统{% endif %}</td><td><strong>{{ event.event }}</strong></td><td class="small muted">{{ event.object_type }}{% if event.object_id %} #{{ event.object_id }}{% endif %}</td><td class="audit-details">{{ event.details }}</td></tr>{% empty %}<tr><td colspan="5"><div class="empty-state"><p>完成教学操作后，重要事件会显示在这里。</p></div></td></tr>{% endfor %}</tbody></table></div></section>
+{% endblock %}

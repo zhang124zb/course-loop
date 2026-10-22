@@ -1,0 +1,4 @@
+{% extends 'teaching/base.html' %}
+{% block title %}{{ title|default:'编辑教学内容' }}{% endblock %}
+{% block breadcrumb %}{{ title|default:'教学管理' }}{% endblock %}
+{% block content %}<div class="page-heading"><div><p class="eyebrow">COURSELOOP / EDITOR</p><h1>{{ title|default:'编辑教学内容' }}</h1>{% if description %}<p class="subtitle">{{ description }}</p>{% endif %}</div></div><section class="panel form-panel"><form method="post" enctype="multipart/form-data" class="stack-form" data-submit-lock>{% csrf_token %}{{ form.as_p }}<div class="form-actions"><button type="submit" class="button primary" data-loading-label="正在保存…">{{ submit_label|default:'保存' }}</button><a class="button" href="{{ cancel_url|default:'/' }}">取消</a></div></form></section>{% endblock %}

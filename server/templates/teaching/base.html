@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#315cf5">
+  <meta name="description" content="CourseLoop 本机教学演示：资源、课堂任务、提交反馈与教师教学诊断。使用模拟学生数据。">
+  <title>{% block title %}教学工作台{% endblock %} · CourseLoop</title>
+  <link rel="stylesheet" href="{% static 'app.css' %}">
+  <script src="{% static 'app.js' %}" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+{% block shell %}
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="{% url 'dashboard' %}"><span class="brand-mark" aria-hidden="true">&lt;/&gt;</span><span><strong>CourseLoop</strong><small>让教学与练习形成闭环</small></span></a>
+  <div class="workspace-chip"><span class="status-dot" aria-hidden="true"></span> 本机教学空间 <span class="mini-label">LOCAL</span></div>
+  <p class="nav-label">教学空间</p>
+  <nav aria-label="主要导航">
+    <a class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}"><span class="nav-icon" aria-hidden="true">▦</span>工作台</a>
+    <a class="nav-item {% if 'resource' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'resources' %}"><span class="nav-icon" aria-hidden="true">▤</span>分层资源库</a>
+    <a class="nav-item {% if request.resolver_match.url_name == 'teaching' or 'assignment' in request.resolver_match.url_name or 'submission' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'teaching' %}"><span class="nav-icon" aria-hidden="true">⌘</span>{% if current_role == 'student' %}我的课堂任务{% else %}课堂与任务{% endif %}</a>
+    {% if current_role == 'admin' %}
+    <p class="nav-label">平台管理</p>
+    <a class="nav-item {% if request.resolver_match.url_name == 'accounts' %}active{% endif %}" href="{% url 'accounts' %}"><span class="nav-icon" aria-hidden="true">♙</span>账号管理</a>
+    <a class="nav-item {% if request.resolver_match.url_name == 'classes' %}active{% endif %}" href="{% url 'classes' %}"><span class="nav-icon" aria-hidden="true">▥</span>班级与课程</a>
+    <a class="nav-item {% if 'ai_' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'ai_settings' %}"><span class="nav-icon" aria-hidden="true">✧</span>模型服务</a>
+    <a class="nav-item {% if request.resolver_match.url_name == 'audit' %}active{% endif %}" href="{% url 'audit' %}"><span class="nav-icon" aria-hidden="true">≡</span>操作记录</a>
+    {% endif %}
+  </nav>
+  <div class="sidebar-bottom"><div class="prototype-card"><strong>课赛融合 · 完整构想</strong><p>查看竞赛与评价的交互原型，了解后续建设方向。</p><a href="https://zhang124zb.github.io/course-loop/" target="_blank" rel="noopener noreferrer">查看课赛原型 ↗</a></div><p class="local-foot"><span class="status-dot" aria-hidden="true"></span> 模拟学生数据 · 本机演示</p></div>
+</aside>
+<div class="workspace">
+  <header class="topbar"><div class="topbar-left"><button class="menu-button" type="button" aria-label="展开导航" aria-controls="sidebar" aria-expanded="false" data-menu-toggle>☰</button><span class="breadcrumb">教学空间 <span aria-hidden="true">/</span> <strong>{% block breadcrumb %}工作台{% endblock %}</strong></span></div><div class="identity"><span class="role-badge">{% if current_role == 'admin' %}管理员{% elif current_role == 'teacher' %}教师{% else %}学生{% endif %}</span><span class="avatar" aria-hidden="true">{{ display_name|first }}</span><span class="identity-name">{{ display_name|default:request.user.username }}</span><form method="post" action="{% url 'logout' %}" class="logout-form">{% csrf_token %}<button type="submit" class="text-button">退出</button></form></div></header>
+  <main id="main" class="main" tabindex="-1">
+    <div class="mode-notice" role="note"><span><strong>本机教学演示</strong> · 使用模拟学生数据，教学操作保存在本机。</span><span class="mode-tag">教 · 学 · 赛 · 评</span></div>
+    {% if messages %}<div class="messages" aria-live="polite">{% for message in messages %}<div class="message {{ message.tags }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+    {% block content %}{% endblock %}
+    <footer class="page-footer"><span>CourseLoop · 每一步学习都有据可循</span><span>教学域本机演示 · 赛评为扩展原型</span></footer>
+  </main>
+</div>
+{% endblock %}
+</body>
+</html>
