@@ -4,7 +4,6 @@ from contextlib import closing
 from datetime import datetime
 import hashlib
 import json
-import os
 from pathlib import Path
 import shutil
 import sqlite3
@@ -12,7 +11,10 @@ import sys
 from cryptography.fernet import Fernet, InvalidToken
 
 ROOT = Path(__file__).resolve().parent.parent
-RUNTIME = Path(os.environ.get('COURSELOOP_RUNTIME_DIR', str(ROOT / '.runtime'))).resolve()
+sys.path.insert(0, str(ROOT / 'server'))
+from config.local_settings import load_local_settings
+
+RUNTIME = load_local_settings()['runtime_dir']
 
 
 def digest(path):

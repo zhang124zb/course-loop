@@ -1,11 +1,13 @@
 """Loopback-only teaching demonstration. School deployment needs a separate review."""
-import os
 import secrets
 from pathlib import Path
 
+from .local_settings import load_local_settings
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_DIR = BASE_DIR.parent
-RUNTIME_DIR = Path(os.environ.get('COURSELOOP_RUNTIME_DIR', str(REPO_DIR / '.runtime'))).resolve()
+_local_settings = load_local_settings()
+RUNTIME_DIR = _local_settings['runtime_dir']
 RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
 _secret_path = RUNTIME_DIR / 'django-secret.key'
 if not _secret_path.exists():
@@ -83,7 +85,7 @@ CSRF_COOKIE_SECURE = False
 DATA_UPLOAD_MAX_MEMORY_SIZE = 21 * 1024 * 1024
 FILE_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 200
-AI_ALLOWED_HOSTS = [x.strip().lower() for x in os.environ.get('COURSELOOP_AI_ALLOWED_HOSTS', '').split(',') if x.strip()]
+AI_ALLOWED_HOSTS = _local_settings['ai_allowed_hosts']
 AI_LOCAL_BASE_URL = 'http://127.0.0.1:11434/v1'
 LOGGING = {
     'version': 1, 'disable_existing_loggers': False,

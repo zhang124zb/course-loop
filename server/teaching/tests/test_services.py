@@ -106,6 +106,13 @@ class ModelBoundaryTests(SimpleTestCase):
             with patch.object(ai.socket, "getaddrinfo", return_value=[(None, None, None, None, ("127.0.0.1", 443))]), self.assertRaises(ai.AIServiceError):
                 ai._connection("https://api.example.test/api/v1", 5)
 
+    @override_settings(AI_ALLOWED_HOSTS=['api.example.test'])
+    def test_persistent_operator_allowlist_and_environment_override(self):
+        with patch.dict('os.environ', {}, clear=True):
+            self.assertEqual(ai.validate_base_url('https://api.example.test/v1'), 'https://api.example.test/v1')
+            with patch.dict('os.environ', {'COURSELOOP_AI_ALLOWED_HOSTS': ''}), self.assertRaises(ValidationError):
+                ai.validate_base_url('https://api.example.test/v1')
+
     def test_api_key_encryption_and_corruption_failure(self):
         with tempfile.TemporaryDirectory() as directory, override_settings(RUNTIME_DIR=Path(directory)):
             encrypted = ai.encrypt_api_key("synthetic-test-key")

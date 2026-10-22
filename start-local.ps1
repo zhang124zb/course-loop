@@ -1,12 +1,14 @@
 ﻿param([switch]$NoBrowser)
 $ErrorActionPreference = 'Stop'
 Set-Location -LiteralPath $PSScriptRoot
-$runtimeDirectory = if ($env:COURSELOOP_RUNTIME_DIR) { [IO.Path]::GetFullPath($env:COURSELOOP_RUNTIME_DIR) } else { Join-Path $PSScriptRoot '.runtime' }
 $localPython = Join-Path $PSScriptRoot '.venv/Scripts/python.exe'
 if (-not (Test-Path -LiteralPath $localPython)) {
     python -m venv .venv
     if ($LASTEXITCODE -ne 0) { throw '无法建立本机Python环境，请确认已安装Python 3.10或更新版本。' }
 }
+$operatorConfigJson = & $localPython server/config/local_settings.py
+if ($LASTEXITCODE -ne 0) { throw '本机配置读取失败，请检查 .local-settings.json 或 COURSELOOP 环境变量。' }
+$runtimeDirectory = ($operatorConfigJson | ConvertFrom-Json).runtime_dir
 & $localPython tools/check_dependencies.py
 if ($LASTEXITCODE -ne 0) {
     & $localPython -m pip install --disable-pip-version-check -r requirements.lock
