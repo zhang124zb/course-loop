@@ -2,9 +2,9 @@
   "name": "course-loop",
   "version": "0.1.0",
   "private": true,
-  "description": "CourseLoop：教、学、赛、评一体化交互原型，使用示例数据",
+  "description": "CourseLoop：本机教学版同款界面的在线演示，另保留课赛融合早期原型",
   "scripts": {
     "start": "node serve.mjs",
-    "check": "node --check dist/app.js"
+    "check": "node --check dist/app.js && node --check dist/demo-data.js && node --check dist/demo-teaching.js && node --check dist/demo-admin.js && node tests/online-demo.test.mjs && node tests/saved-state.test.mjs"
   }
 }

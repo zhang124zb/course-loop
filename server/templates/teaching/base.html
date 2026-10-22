@@ -29,7 +29,7 @@
     <a class="nav-item {% if request.resolver_match.url_name == 'audit' %}active{% endif %}" href="{% url 'audit' %}"><span class="nav-icon" aria-hidden="true">≡</span>操作记录</a>
     {% endif %}
   </nav>
-  <div class="sidebar-bottom"><div class="prototype-card"><strong>课赛融合 · 完整构想</strong><p>查看竞赛与评价的交互原型，了解后续建设方向。</p><a href="https://zhang124zb.github.io/course-loop/" target="_blank" rel="noopener noreferrer">查看课赛原型 ↗</a></div><p class="local-foot"><span class="status-dot" aria-hidden="true"></span> 模拟学生数据 · 本机演示</p></div>
+  <div class="sidebar-bottom"><div class="prototype-card"><strong>课赛融合 · 完整构想</strong><p>查看竞赛与评价的交互原型，了解后续建设方向。</p><a href="https://zhang124zb.github.io/course-loop/prototype/" target="_blank" rel="noopener noreferrer">查看课赛原型 ↗</a></div><p class="local-foot"><span class="status-dot" aria-hidden="true"></span> 模拟学生数据 · 本机演示</p></div>
 </aside>
 <div class="workspace">
   <header class="topbar"><div class="topbar-left"><button class="menu-button" type="button" aria-label="展开导航" aria-controls="sidebar" aria-expanded="false" data-menu-toggle>☰</button><span class="breadcrumb">教学空间 <span aria-hidden="true">/</span> <strong>{% block breadcrumb %}工作台{% endblock %}</strong></span></div><div class="identity"><span class="role-badge">{% if current_role == 'admin' %}管理员{% elif current_role == 'teacher' %}教师{% else %}学生{% endif %}</span><span class="avatar" aria-hidden="true">{{ display_name|first }}</span><span class="identity-name">{{ display_name|default:request.user.username }}</span><form method="post" action="{% url 'logout' %}" class="logout-form">{% csrf_token %}<button type="submit" class="text-button">退出</button></form></div></header>

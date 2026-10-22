@@ -4,4 +4,5 @@
 *.ps1 text eol=crlf
 *.cmd text eol=crlf
 server/** text eol=lf
-dist/app.js whitespace=cr-at-eol
+dist/** text eol=lf
+tests/** text eol=lf

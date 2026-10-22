@@ -9,7 +9,7 @@ const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=
 const server = http.createServer(async (req, res) => {
   try {
     const requested = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
-    const file = path.resolve(root, `.${requested === '/' ? '/index.html' : requested}`);
+    const file = path.resolve(root, `.${requested.endsWith('/') ? requested + 'index.html' : requested}`);
     if (!file.startsWith(root) || !['GET', 'HEAD'].includes(req.method)) {
       res.writeHead(403).end('Forbidden');
       return;
